@@ -7,32 +7,25 @@ from django.views import View
 from django.contrib.auth.views import LoginView,LogoutView
  
 # Create your views here.
-# jodi amra app er moddhe template create kori taile settings e template add korte hobe na otherwise lagbe 
 class UserRegistrationView(FormView): #django class based view google search
     template_name='accounts/user_registration.html' 
     form_class=UserRegistrationForm
-    success_url=reverse_lazy('profile') #     amader user jokhon registration complete korbe tokhon amra take kothai(profile) pathay dibo 
-    # reverse lazy er kaj hocche amader website jate age thekei load hoye na thake tie use kora hoi 
-    # jodi age thekei load hoye thake taile website slow kaj kore tie reverse_lazy use kora 
-    def form_valid(self,form): # form_valid ekta build in functon ..django amader form valid er moddhe
-        # form take pass kore dibe 
+    success_url=reverse_lazy('profile') 
+    def form_valid(self,form): 
         print(form.cleaned_data)
         user=form.save()
-        login(self.request, user) # form.save in korar pore amra user k login koray diye thaki ekhane
-        # self.request na dile form ta se khuje pabe na ..mane login er jonno amader request kortei hobe
+        login(self.request, user)
         print(user)
-        return super().form_valid(form) # form valid function call hobe jodi shob thik thake
-    # er porer kaj hocche user_registration.html form er.. 
-    
+        return super().form_valid(form) 
     
 class UserLoginView(LoginView):
     template_name='accounts/user_login.html'
     def get_success_url(self):
         return reverse_lazy('home')
     
-class UserLogoutView(LogoutView): # Logout/Login view niye porasona korte hobe 
+class UserLogoutView(LogoutView): 
     def get_success_url(self):
-        if self.request.user.is_authenticated: # user login ki na seta amader check korte hobe age 
+        if self.request.user.is_authenticated: 
             logout(self.request)
         return reverse_lazy('home')
     

@@ -19,7 +19,7 @@ from django.urls import path,include
 from core.views import HomeView
 
 urlpatterns = [
-    path('', HomeView.as_view(),name='home'), # ekhane url declare er jonno core er moddhe amader alada kore url declare korte hobe na 
+    path('', HomeView.as_view(),name='home'), 
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
     path('transactions/',include('transactions.urls')),
